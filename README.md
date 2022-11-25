@@ -17,7 +17,7 @@ Simple cli that allows the send python code to RedisGears
 * run-idempotent filename streamid
   * deletes prior gears that listen to streamid and runs gear defined in filename
 * watchfor regex
-  * watches for any changes in files matching regex, and auto unregesters and runs gears
+  * watches for any changes in files matching regex, and auto unregisters and runs gears
 
 ## Install
 ```python
