@@ -10,7 +10,11 @@ Simple cli that allows the send python code to RedisGears
 
 # need to install
 * pipe viewer
+  * sudo apt-get install pv
 * watchexec-cli
+  * curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  * cargo install cargo-binstall
+  * cargo binstall watchexec-cli
 
 ## HML: this fork adds some additional commands to assist in gear development
 * delete-all-gears
