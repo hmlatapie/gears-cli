@@ -4,6 +4,7 @@ import json
 import os
 import zipfile
 import io
+import subprocess, sys
 
 DATA_BIN_FINE_NAME = 'Data.bin'
 META_DATA_FILE_NAME = 'MetaData.json'
@@ -382,6 +383,45 @@ def list_all_gears(host, port, user, password):
     regs = r.execute_command('RG.DUMPREGISTRATIONS')
     for reg in regs:
         print("{}\n".format(reg))
+
+@gears_cli.command(help='monitor-stream')
+@click.option('--host', default='localhost', help='Redis host to connect to')
+@click.option('--port', default=6379, type=int, help='Redis port to connect to')
+@click.option('--user', default=None, help='Redis acl user')
+@click.option('--password', default=None, help='Redis password')
+@click.argument('stream_regex')
+@click.argument('stream_name')
+def monitor_stream(host, port, user, password, stream_regex, stream_name):  
+    cmd = "redis-cli monitor | grep -i '{}' | pv -lf --name {} | grep {}".format(stream_regex, stream_name, stream_name)
+    print(cmd) 
+    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
+
+    while True:
+        out = p.stderr.read(1)
+        if out == '' and p.poll() != None:
+            break
+        if out != '':
+            out = out.decode()
+            sys.stderr.write(out)
+	
+@gears_cli.command(help='watch a gear file for changes and update engine as needed')
+@click.option('--host', default='localhost', help='Redis host to connect to')
+@click.option('--port', default=6379, type=int, help='Redis port to connect to')
+@click.option('--user', default=None, help='Redis acl user')
+@click.option('--password', default=None, help='Redis password')
+@click.argument('gear_filename')
+def watch(host, port, user, password, gear_filename):  
+    cmd = "watchexec -w {} 'gears-cli delete-all-gears && gears-cli run {}'".format(gear_filename, gear_filename)
+    print(cmd) 
+    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
+    print("press ctrl-c to exit")
+    while True:
+        out = p.stderr.read(1)
+        if out == '' and p.poll() != None:
+            break
+        if out != '':
+            sys.stdout.write(out)
+            sys.stderr.write(out)
 
 def main():
     gears_cli()

@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": ["list-all-gears"],
+            "args": ["watch gear.py"],
             "console": "integratedTerminal",
             "justMyCode": true
         }
