@@ -359,6 +359,30 @@ def import_requirements(host, port, user, password,
         import_single_req(r, req_path, bulk_size_in_bytes)
         print(Colors.Green('Requirement %s imported successfully' % req_path))
 
+@gears_cli.command(help='delete all registered gears')
+@click.option('--host', default='localhost', help='Redis host to connect to')
+@click.option('--port', default=6379, type=int, help='Redis port to connect to')
+@click.option('--user', default=None, help='Redis acl user')
+@click.option('--password', default=None, help='Redis password')
+def delete_all_gears(host, port, user, password):  
+    r = create_connection(host=host, port=port, username=user, password=password)
+    regs = r.execute_command('RG.DUMPREGISTRATIONS')
+    for reg in regs:
+        # get the id of the registration
+        r.execute_command('RG.UNREGISTER', reg[1])
+        print("deleting registration id: {}".format(reg[1]))
+
+@gears_cli.command(help='list all registered gears')
+@click.option('--host', default='localhost', help='Redis host to connect to')
+@click.option('--port', default=6379, type=int, help='Redis port to connect to')
+@click.option('--user', default=None, help='Redis acl user')
+@click.option('--password', default=None, help='Redis password')
+def list_all_gears(host, port, user, password):  
+    r = create_connection(host=host, port=port, username=user, password=password)
+    regs = r.execute_command('RG.DUMPREGISTRATIONS')
+    for reg in regs:
+        print("{}\n".format(reg))
+
 def main():
     gears_cli()
 

@@ -132,3 +132,8 @@ dmypy.json
 #Eclipse
 .project
 .pydevproject
+
+# venv
+/lib64
+/bin
+pyvenv.cfg
