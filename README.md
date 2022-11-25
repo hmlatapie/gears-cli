@@ -8,6 +8,10 @@
 # gears-cli
 Simple cli that allows the send python code to RedisGears
 
+# need to install
+* pipe viewer
+* watchexec-cli
+
 ## HML: this fork adds some additional commands to assist in gear development
 * delete-all-gears
 * list-all-gears
