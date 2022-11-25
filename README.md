@@ -39,11 +39,12 @@ Options:
   --help  Show this message and exit.
 
 Commands:
+  delete-all-gears      delete all registered gears
   export-requirements   Export requirements from RedisGears
   import-requirements   Import requirements to RedisGears
   install-requirements  Install give requirements
+  list-all-gears        list all registered gears
   run                   Run gears function
-
 
 > gears-cli run --help
 Usage: gears-cli run [OPTIONS] FILEPATH [EXTRA_ARGS]...
