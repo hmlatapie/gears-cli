@@ -8,6 +8,17 @@
 # gears-cli
 Simple cli that allows the send python code to RedisGears
 
+## HML: this fork adds some additional commands to assist in gear development
+* delete-all-gears
+* list-all-gears
+## HML TODO:
+* monitorstream stream_regex
+  * shows real-time metrics for stream matching stream_regex using pipe viewer
+* run-idempotent filename streamid
+  * deletes prior gears that listen to streamid and runs gear defined in filename
+* watchfor regex
+  * watches for any changes in files matching regex, and auto unregesters and runs gears
+
 ## Install
 ```python
 pip install gears-cli
@@ -16,7 +27,7 @@ pip install gears-cli
 ## Install latest code 
 
 ```python
-pip install git+https://github.com/RedisGears/gears-cli.git
+pip install git+https://github.com/hmlatapie/gears-cli.git
 ```
 
 ## Usage
