@@ -384,7 +384,7 @@ def list_all_gears(host, port, user, password):
     for reg in regs:
         print("{}\n".format(reg))
 
-@gears_cli.command(help='monitor-stream')
+@gears_cli.command(help='monitor-stream - STREAM_NAME must not match any data in the stream')
 @click.option('--host', default='localhost', help='Redis host to connect to')
 @click.option('--port', default=6379, type=int, help='Redis port to connect to')
 @click.option('--user', default=None, help='Redis acl user')
