@@ -392,7 +392,7 @@ def list_all_gears(host, port, user, password):
 @click.argument('stream_regex')
 @click.argument('stream_name')
 def monitor_stream(host, port, user, password, stream_regex, stream_name):  
-    cmd = "redis-cli monitor | grep -i '{}' | pv -lf --name {} | grep {}".format(stream_regex, stream_name, stream_name)
+    cmd = "redis-cli -h {} -p {} monitor | grep -i '{}' | pv -lf --name {} | grep {}".format(host, port, stream_regex, stream_name, stream_name)
     print(cmd) 
     p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
 
@@ -411,7 +411,7 @@ def monitor_stream(host, port, user, password, stream_regex, stream_name):
 @click.option('--password', default=None, help='Redis password')
 @click.argument('gear_filename')
 def watch(host, port, user, password, gear_filename):  
-    cmd = "watchexec -w {} 'gears-cli delete-all-gears && gears-cli run {}'".format(gear_filename, gear_filename)
+    cmd = "watchexec -w {} 'gears-cli --host {} --port {} delete-all-gears && gears-cli run {}'".format(host, port, gear_filename, gear_filename)
     print(cmd) 
     p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
     print("press ctrl-c to exit")
